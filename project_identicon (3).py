@@ -1,23 +1,14 @@
-
-# coding: utf-8
-
-# # Identicon
-# This program makes pretty pictures
-
-# In[40]:
-
 import matplotlib.pyplot as plt 
 import numpy as np
 import matplotlib.colors as clr
 import random
-import pylab
 # input string 288 bits, convert to hexadecimal rep[x]
 # output 12 * 12 grid, cells 4 different colors[x]
 # mapping 00-> white , 01 -> light blue, ....[x]
 # http://stackoverflow.com/questions/10194482/custom-matplotlib-plot-chess-board-like-table-with-colored-cells[x]
-#make smaller subsection of the existing corners
-#save them
-#Show both plots at the same time!
+#save them[x]
+#Show both plots at the same time! [x]
+#Give color grid extra parameters [x]
 
 def string_to_bit(text):
 #converts the string(72 chars, 288 bits) into bits to determine the color of each cell
@@ -34,7 +25,7 @@ def string_to_bit(text):
         out_array = out_array + narray
     return out_array
 
-def color_grid(grid):
+def color_grid(grid, cnum=None, rnum=None, color=None):
     #determines color(White, light blue, blue, navy/dark blue) of each cell based on the string
     global zvals
     zvals = np.zeros(shape=(12,12))
@@ -42,8 +33,10 @@ def color_grid(grid):
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             zvals[i][j] = coded_string[i*12+j]
+    #updating the color of a specific cell
+    if cnum is not None or rnum is not None or color is not None:
+        zvals[cnum][rnum] = color
     cmap = clr.ListedColormap(['white', 'lightblue', 'blue', 'navy'])
-    zvals[0][1] = 1
     bounds=[0,1,2,3,4]
     norm = clr.BoundaryNorm(bounds, cmap.N)
     grid = plt.imshow(zvals, interpolation='nearest', origin='lower',
@@ -52,7 +45,7 @@ def color_grid(grid):
 # Make a 12x12 grid...
 def draw_grid():
     #size of the image in inches(width,height) and dpi   
-    plt.figure(figsize=(2,2), dpi = 113)
+    plt.figure(figsize=(2,2), dpi=113)
     nrows, ncols = 12, 12
     #creates array of zeroes that is nrows by ncols
     image = np.zeros(nrows*ncols)
@@ -66,22 +59,22 @@ def draw_grid():
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
     #pylab.savefig("Original.png", bbox_inches ='tight')
-    plt.show()
+    plt.draw()
     
     
 #New grid created with differences    
 def draw_grid_altered():  
-    plt.figure(figsize=(2,2), dpi = 113)
+    plt.figure(figsize=(2,2), dpi=113)
     nrows, ncols = 12, 12
     image = np.zeros(nrows*ncols)
     image = image.reshape((nrows, ncols))
-    switch_color_top_left(color_grid(image))#change difference here
+    switch_color_top_right(color_grid(image))
     frame = plt.gca()
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
-    #pylab.savefig("Switch_color_top_left.png", bbox_inches ='tight')
-    plt.show()
+    #pylab.savefig("c:\Users\NYUK12STEM\Identicons\switch_value_right_edge.png", bbox_inches ='tight')
+    plt.draw()
     
     
 def color_switch(i,j):
@@ -108,8 +101,7 @@ def switch_color_top_left(color_grid):
     i =random.randint(6,11)
     j = random.randint(0,5)
     color_switch(i,j)
-    
-            
+              
 def switch_color_bot_left(color_grid):
     i = random.randint(0,5)
     j = random.randint(0,5)
@@ -151,7 +143,7 @@ def switch_color_right_edge(color_grid):
     color_switch(i,j)
     
     
-#Switches the colors of 2 random adjacent cells with each other(if cell 1 was white and cell 2 was blue, cell 2 will be )
+#Switches the colors of 2 random adjacent cells with each other
 def switch_value(i,j):
     m = random.randint(0,3)
     if m == 0:
@@ -182,7 +174,6 @@ def switch_value(i,j):
         s = zvals[i][j]
         zvals[i][j] = zvals[i][j-1]
         zvals[i][j-1] = s
-        
     print j,i
     
 def switch_value_top_right(color_grid):
@@ -205,54 +196,38 @@ def switch_value_bot_left(color_grid):
     j = random.randint(0,5)
     switch_value(i,j)
     
+def switch_value_middle(color_grid):
+    i = random.randint(3,9)
+    j = random.randint(3,9)
+    switch_value(i,j)
 
+def switch_value_top_edge(color_grid):
+    i = 11
+    j = random.randint(0,11)
+    switch_value(i,j)
+
+def switch_value_left_edge(color_grid):
+    i = random.randint(0,11)
+    j = 0
+    switch_value(i,j)
+    
+def switch_value_bot_edge(color_grid):
+    i = 0
+    j = random.randint(0,11)
+    switch_value(i,j)
+    
+def switch_value_right_edge(color_grid):
+    i = random.randint(0,11)
+    j = 11
+    switch_value(i,j)
+    
+    
 def test1():
-    draw_grid_altered()
+    draw_grid(), draw_grid_altered()
+    plt.show()
     
     
 def test2():
     draw_grid()
 test1()
 #test2()
-
-
-# In[27]:
-
-print ord("412"[0])-ord("0")
-
-
-# In[118]:
-
-13%4
-
-
-# In[48]:
-
-13/4
-
-
-# In[11]:
-
-len("ce361f3f109a8e845e2b9bb3aaa025d3e9903239afd14ab4c90b93c39a8b8e9085c")
-
-
-# In[21]:
-
-from matplotlib import pyplot as plt
-plt.figure(figsize=(1,1))
-x = [1,2,3]
-plt.plot(x, x)
-plt.show()
-
-
-# In[36]:
-
-str = "Line1-abcdef \nLine2-abc \nLine4-abcd";
-print str.split( )
-print str.split(' ', 1 )
-
-
-# In[ ]:
-
-
-
