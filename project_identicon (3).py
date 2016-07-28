@@ -34,7 +34,7 @@ def color_grid(grid, cnum=None, rnum=None, color=None):
         for j in range(len(grid[0])):
             zvals[i][j] = coded_string[i*12+j]
     #updating the color of a specific cell(color is index of color in color map)
-    if cnum is not None or rnum is not None or color is not None:
+    if cnum is not None and rnum is not None and color is not None:
         zvals[cnum][rnum] = color
     cmap = clr.ListedColormap(['white', 'lightblue', 'blue', 'navy'])
     bounds=[0,1,2,3,4]
