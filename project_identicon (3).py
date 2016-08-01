@@ -2,13 +2,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as clr
 import random
-# input string 288 bits, convert to hexadecimal rep[x]
-# output 12 * 12 grid, cells 4 different colors[x]
-# mapping 00-> white , 01 -> light blue, ....[x]
-# http://stackoverflow.com/questions/10194482/custom-matplotlib-plot-chess-board-like-table-with-colored-cells[x]
-#save them[x]
-#Show both plots at the same time! [x]
-#Give color grid extra parameters [x]
+#remove patterns!
+
 
 def string_to_bit(text):
 #converts the string(72 chars, 288 bits) into bits to determine the color of each cell
@@ -33,14 +28,68 @@ def color_grid(grid, cnum=None, rnum=None, color=None):
     for i in range(len(grid)):
         for j in range(len(grid[0])):
             zvals[i][j] = coded_string[i*12+j]
-    #updating the color of a specific cell(color is index of color in color map)
+    #updating the color of a specific cell(color is the index of the color in the colormap)
     if cnum is not None and rnum is not None and color is not None:
         zvals[cnum][rnum] = color
-    cmap = clr.ListedColormap(['white', 'lightblue', 'blue', 'navy'])
+    cmap = clr.ListedColormap(['#ffffff', '#d5e6f3', '#2f99c9', '#2d5775'])
     bounds=[0,1,2,3,4]
     norm = clr.BoundaryNorm(bounds, cmap.N)
     grid = plt.imshow(zvals, interpolation='nearest', origin='lower',
                     cmap=cmap, norm=norm)
+    
+def test_with_switch():
+    image = np.zeros(shape=(12,12))
+    plt.figure(figsize=(2,2), dpi=113)
+    color_grid(image)
+    i = 2
+    j = 8
+    zvals[i+1][j-1] = 1
+    zvals[i+1][j] = 0
+    zvals[i+1][j+1] = 2
+    zvals[i+1][j+2] = 3
+    zvals[i][j+2] = 0
+    zvals[i-1][j+2] = 2
+    zvals[i-1][j+1] = 1
+    zvals[i-1][j] = 2
+    zvals[i-1][j-1] = 3
+    zvals[i][j-1] = 0
+    zvals[i][j] = 0
+    zvals[i][j+1] = 1
+    frame = plt.gca()
+    frame.set_frame_on(False)
+    frame.axes.get_xaxis().set_ticks([])
+    frame.axes.get_yaxis().set_ticks([])
+    plt.savefig("c:\\Users\\NYUK12STEM\\NewIdenticons\\wlb\\bot_right_switch_test.png", bbox_inches ='tight')
+    print j, i
+    plt.show()
+    
+    
+
+def pattern_buster():
+    image = np.zeros(shape=(12,12))
+    color_grid(image)
+    score_viewer = np.zeros(shape=(12,12))
+    for i in range(len(image)):
+        for j in range(len(image[0])):
+            if i == 11:
+                i = 10
+            if zvals[i+1][j] == zvals[i][j]:                
+                score_viewer[i][j] += 1
+            if i == 0:
+                i = 1
+            if zvals[i-1][j] == zvals[i][j]:
+                 score_viewer[i][j] += 1
+            if j == 11:
+                j = 10
+            if zvals[i][j+1] == zvals[i][j]:
+                score_viewer[i][j] +=1
+            if j == 0:
+                j = 1
+            if zvals[i][j-1] == zvals[i][j]:
+                score_viewer[i][j] += 1
+                
+    return score_viewer
+                    
     
 # Make a 12x12 grid...
 def draw_grid():
@@ -68,7 +117,7 @@ def draw_grid_altered():
     nrows, ncols = 12, 12
     image = np.zeros(nrows*ncols)
     image = image.reshape((nrows, ncols))
-    switch_color_top_right(color_grid(image))
+    switch_color_all(color_grid(image))
     frame = plt.gca()
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
@@ -224,10 +273,11 @@ def switch_value_right_edge(color_grid):
     
 def test1():
     draw_grid(), draw_grid_altered()
+    #print pattern_buster()
     plt.show()
     
     
 def test2():
-    draw_grid()
-test1()
-#test2()
+    test_with_switch()
+#test1()
+test2()
