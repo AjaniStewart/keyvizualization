@@ -26,7 +26,7 @@ for row in rows:
 location["Percentage"] = pd.Series(location.Number / 120 * 100)
 print location
 location.set_index("Location")
-#location.plot(kind="bar",xticks = location)
+#location.plot(kind="bar",xticks = location) Still need to fix the indexing so I can graph.
 plt.show()
 
 
@@ -57,19 +57,3 @@ del p["Answer.ans"]
 del p["Input.img_id"]
 p.to_csv("c:\\Users\\NYUK12STEM\\Desktop\\Final.csv")
 print p
-
-
-# In[4]:
-
-list(df.columns.values)
-
-
-# In[40]:
-
-print df
-
-
-# In[ ]:
-
-
-
