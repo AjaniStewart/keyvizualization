@@ -18,6 +18,7 @@ rowc = [["BN",47], ["LBN",40], ["LBB", 38], ["WN",42], ["WLB",49],["WB",39]]
 for row in rowc:
     color.loc[len(color)] = row
 color["Percentage"] = pd.Series(color.Number / 80 * 100)
+color.set_index("Color", inplace=True)
 print color
 color.plot(kind="bar")
 rows = [["Bot_left",63],["Top_Left",67],["Bot_Right",61],["Top_Right",64]]
@@ -25,8 +26,8 @@ for row in rows:
     location.loc[len(location)] = row
 location["Percentage"] = pd.Series(location.Number / 120 * 100)
 print location
-location.set_index("Location")
-#location.plot(kind="bar",xticks = location) Still need to fix the indexing so I can graph.
+location.set_index("Location", inplace=True) #Fixed!!!
+location.plot(kind="bar")
 plt.show()
 
 
