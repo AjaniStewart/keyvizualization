@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.colors as clr
 import random
-#remove patterns!
 
 
 def string_to_bit(text):
