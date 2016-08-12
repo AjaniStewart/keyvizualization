@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.colors as clr
 import random
 
-
 def string_to_bit(text):
 #converts the hex string (72 chars, 288 bits) into bits to determine the color of each cell
     out_array = []
@@ -64,9 +63,6 @@ def test_with_switch():
     frame.axes.get_yaxis().set_ticks([])
     print j, i
     plt.show()
-    
-    
-
 
 # Making the 12x12 grid...
 def draw_grid():
@@ -85,7 +81,6 @@ def draw_grid():
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
     plt.draw()
-    
     
 #New grid created with differences    
 def draw_grid_altered():  
@@ -162,7 +157,6 @@ def switch_color_right_edge(color_grid):
     i = random.randint(0,11)
     j = 11
     color_switch(i,j)
-    
     
 #Switches the colors of 2 random adjacent cells with each other
 def switch_value(i,j):
@@ -242,8 +236,6 @@ def switch_value_right_edge(color_grid):
     j = 11
     switch_value(i,j)
     
-    
 def test1():
     draw_grid(), draw_grid_altered()
     plt.show()
-    
