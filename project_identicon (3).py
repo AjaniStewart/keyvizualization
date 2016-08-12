@@ -31,6 +31,7 @@ def color_grid(grid, cnum=None, rnum=None, color=None):
     #updating the color of a specific cell(color is the index of the color in the colormap)
     if cnum is not None and rnum is not None and color is not None:
         zvals[cnum][rnum] = color
+    #HTML color codes    
     cmap = clr.ListedColormap(['#ffffff', '#d5e6f3', '#2f99c9', '#2d5775'])
     bounds=[0,1,2,3,4]
     norm = clr.BoundaryNorm(bounds, cmap.N)
@@ -59,39 +60,13 @@ def test_with_switch():
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
-    plt.savefig("c:\\Users\\NYUK12STEM\\NewIdenticons\\wlb\\bot_right_switch_test.png", bbox_inches ='tight')
     print j, i
     plt.show()
     
     
 
-def pattern_buster():
-    image = np.zeros(shape=(12,12))
-    color_grid(image)
-    score_viewer = np.zeros(shape=(12,12))
-    for i in range(len(image)):
-        for j in range(len(image[0])):
-            if i == 11:
-                i = 10
-            if zvals[i+1][j] == zvals[i][j]:                
-                score_viewer[i][j] += 1
-            if i == 0:
-                i = 1
-            if zvals[i-1][j] == zvals[i][j]:
-                 score_viewer[i][j] += 1
-            if j == 11:
-                j = 10
-            if zvals[i][j+1] == zvals[i][j]:
-                score_viewer[i][j] +=1
-            if j == 0:
-                j = 1
-            if zvals[i][j-1] == zvals[i][j]:
-                score_viewer[i][j] += 1
-                
-    return score_viewer
-                    
-    
-# Make a 12x12 grid...
+
+# Making the 12x12 grid...
 def draw_grid():
     #size of the image in inches(width,height) and dpi   
     plt.figure(figsize=(2,2), dpi=113)
@@ -107,7 +82,6 @@ def draw_grid():
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
-    #pylab.savefig("Original.png", bbox_inches ='tight')
     plt.draw()
     
     
@@ -122,10 +96,9 @@ def draw_grid_altered():
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
-    #pylab.savefig("c:\Users\NYUK12STEM\Identicons\switch_value_right_edge.png", bbox_inches ='tight')
     plt.draw()
     
-    
+#These functions switches colors of cells in the grid(white<-->lightblue, blue<-->navy)  
 def color_switch(i,j):
     if zvals[i][j] == 0:
         zvals[i][j] = 1
@@ -137,13 +110,10 @@ def color_switch(i,j):
         zvals[i][j] = 2
     print j ,i
     
-#These functions switches colors of cells in the grid(white<-->lightblue, blue<-->navy)     
 def switch_color_all(color_grid):
     for i in range(12):
         for j in range(12):
             color_switch(i,j)
-    
-
     
 def switch_color_top_left(color_grid):
 #i = y axis, j = x-axis
@@ -273,11 +243,5 @@ def switch_value_right_edge(color_grid):
     
 def test1():
     draw_grid(), draw_grid_altered()
-    #print pattern_buster()
     plt.show()
     
-    
-def test2():
-    test_with_switch()
-#test1()
-test2()
