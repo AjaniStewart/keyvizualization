@@ -5,7 +5,7 @@ import random
 
 
 def string_to_bit(text):
-#converts the string(72 chars, 288 bits) into bits to determine the color of each cell
+#converts the hex string (72 chars, 288 bits) into bits to determine the color of each cell
     out_array = []
     for i in range(len(text)):
         narray = [0,0]
@@ -15,10 +15,13 @@ def string_to_bit(text):
             n = ord(text[i].upper()) - ord('A') + 10
         narray[1] = n%4
         narray[0] = n/4
-        #print text[i], n
         out_array = out_array + narray
     return out_array
-
+"""
+cnum = column number of the cell to be updated,
+rnum = number of the cell to be updated,
+color = index of the color in the colormap
+"""
 def color_grid(grid, cnum=None, rnum=None, color=None):
     #determines color(White, light blue, blue, navy/dark blue) of each cell based on the string
     global zvals
