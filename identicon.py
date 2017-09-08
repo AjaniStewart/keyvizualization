@@ -61,7 +61,7 @@ def test_with_switch():
     frame.set_frame_on(False)
     frame.axes.get_xaxis().set_ticks([])
     frame.axes.get_yaxis().set_ticks([])
-    print j, i
+    print (j, i)
     plt.show()
 
 # Making the 12x12 grid...
@@ -105,7 +105,7 @@ def color_switch(i,j):
         zvals[i][j] = 3
     else:
         zvals[i][j] = 2
-    print j ,i
+    print(i,j)
     
 def switch_color_all(color_grid):
     for i in range(12):
@@ -189,7 +189,7 @@ def switch_value(i,j):
         s = zvals[i][j]
         zvals[i][j] = zvals[i][j-1]
         zvals[i][j-1] = s
-    print j,i
+    print(j,i)
     
 def switch_value_top_right(color_grid):
     i = random.randint(6,11)
@@ -239,3 +239,8 @@ def switch_value_right_edge(color_grid):
 def test1():
     draw_grid(), draw_grid_altered()
     plt.show()
+def main():
+    test1()
+
+if __name__ == "__main__":
+    main()
